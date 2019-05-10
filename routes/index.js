@@ -31,6 +31,31 @@ router.get('/', (req, res) => {
 	})
 })
 
+router.get('/blog', (req, res) => {
+	const data = {
+		cdn: CDN,
+		pageName: 'blog'
+	}
+
+	let ctr = new controllers.post()
+	return ctr.get()
+	.then(posts => {
+		data['posts'] = posts
+		return turbo.currentApp(process.env.TURBO_ENV)
+	})
+	.then(site => {
+		data['site'] = site
+		data['global'] = site.globalConfig
+		res.render('blog', data)
+	})
+	.catch(err => {
+		res.json({
+			confirmation: 'fail',
+			message: err.message
+		})
+	})
+})
+
 router.get('/post/:slug', (req, res) => {
 	const data = {
 		cdn: CDN,
@@ -59,7 +84,6 @@ router.get('/post/:slug', (req, res) => {
 			message: err.message
 		})
 	})
-
 })
 
 module.exports = router
