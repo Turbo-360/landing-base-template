@@ -32,10 +32,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/blog', (req, res) => {
-	const data = {
-		cdn: CDN,
-		pageName: 'blog'
-	}
+	const data = {cdn: CDN}
 
 	let ctr = new controllers.post()
 	return ctr.get()
@@ -57,10 +54,7 @@ router.get('/blog', (req, res) => {
 })
 
 router.get('/post/:slug', (req, res) => {
-	const data = {
-		cdn: CDN,
-		pageName: 'post'
-	}
+	const data = {cdn: CDN}
 
 	let ctr = new controllers.post()
 	return ctr.get({slug:req.params.slug})
